@@ -9,5 +9,5 @@
     <string name="search">Поиск</string>
 
     <string name="searchbar_description">Введите название товара, который хотите найти</string>
-    <string name="add_product_to_cart">Введите название товара, который хотите найти</string>
+    <string name="add_product_to_cart">Добавить товар %s в корзину</string>
 </resources>

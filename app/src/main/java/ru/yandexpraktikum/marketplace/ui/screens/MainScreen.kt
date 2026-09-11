@@ -93,10 +93,7 @@ fun MainScreen(onProductClick: (Int) -> Unit) {
                     )
                 },
                 placeholder = {
-                    Text(
-                        text = stringResource(R.string.search_products),
-                        color = Color(0xFFAAAAAA)
-                    )
+                    Text(text = stringResource(R.string.search_products))
                 },
                 modifier = Modifier
                     .semantics {
@@ -143,7 +140,7 @@ fun ProductCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .semantics { }
+            .semantics { /* ignore */ }
     ) {
         Column {
             Box(

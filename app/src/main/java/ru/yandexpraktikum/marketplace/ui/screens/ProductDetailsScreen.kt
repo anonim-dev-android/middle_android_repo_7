@@ -76,6 +76,7 @@ fun ProductDetailsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
+                    .semantics(mergeDescendants = true) { /* ignore */ }
             ) {
                 AsyncImage(
                     model = product.imageUrl,
