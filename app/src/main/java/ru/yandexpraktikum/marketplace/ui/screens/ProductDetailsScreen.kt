@@ -69,6 +69,8 @@ fun ProductDetailsScreen(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddingValues ->
+        val addToCartBtnDescription = stringResource(R.string.add_product_to_cart, product.name)
+
         Box(
             modifier = Modifier.padding(paddingValues)
         ) {
@@ -110,7 +112,6 @@ fun ProductDetailsScreen(
                 
                 Spacer(modifier = Modifier.weight(1f))
 
-                 val addToCartBtnDescription = stringResource(R.string.add_product_to_cart, product.name)
                 Button(
                     onClick = {
                         scope.launch {

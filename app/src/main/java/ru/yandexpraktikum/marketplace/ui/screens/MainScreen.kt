@@ -36,11 +36,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -80,6 +81,7 @@ fun MainScreen(onProductClick: (Int) -> Unit) {
                 .padding(paddingValues)
         ) {
             val searchBarDescription = stringResource(R.string.searchbar_description)
+
             SearchBar(
                 query = searchQuery,
                 onQueryChange = { searchQuery = it },
@@ -137,10 +139,22 @@ fun ProductCard(
     onClick: () -> Unit,
     onAddToCart: () -> Unit
 ) {
+    val addToCartDescription = stringResource(R.string.add_product_to_cart, product.name)
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .semantics { /* ignore */ }
+            .semantics {
+                customActions = listOf(
+                    CustomAccessibilityAction(
+                        label = addToCartDescription,
+                        action = {
+                            onAddToCart()
+                            true
+                        }
+                    )
+                )
+            }
     ) {
         Column {
             Box(
@@ -180,7 +194,6 @@ fun ProductCard(
                     )
                 }
 
-                val addToCartDescription = stringResource(R.string.add_product_to_cart, product.name)
                 Icon(
                     Icons.Default.ShoppingCart,
                     contentDescription = stringResource(R.string.add_to_cart),
