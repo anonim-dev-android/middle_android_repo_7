@@ -30,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import kotlinx.coroutines.launch
@@ -67,17 +69,20 @@ fun ProductDetailsScreen(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddingValues ->
-        Box(modifier = Modifier
-            .padding(paddingValues)
+        val addToCartBtnDescription = stringResource(R.string.add_product_to_cart, product.name)
+
+        Box(
+            modifier = Modifier.padding(paddingValues)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp)
+                    .semantics(mergeDescendants = true) { /* ignore */ }
             ) {
                 AsyncImage(
                     model = product.imageUrl,
-                    contentDescription = null,
+                    contentDescription = product.name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(300.dp),
@@ -107,7 +112,6 @@ fun ProductDetailsScreen(
                 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // val buttonDescription = stringResource(R.string.add_product_to_cart, product.name)
                 Button(
                     onClick = {
                         scope.launch {
@@ -117,7 +121,9 @@ fun ProductDetailsScreen(
                             )
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .semantics{ contentDescription = addToCartBtnDescription }
                 ) {
                     Icon(
                         Icons.Default.ShoppingCart,
